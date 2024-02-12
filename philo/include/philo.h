@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:28:03 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/12 15:00:33 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:45:11 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PHILO_H
@@ -23,9 +23,10 @@
 
 typedef struct s_data	t_data;
 typedef struct s_philo	t_philo;
-typedef enum status t_status;
+typedef enum e_status	t_status;
 
-enum status {
+enum e_status
+{
 	EATING,
 	SLEEPING,
 	THINKING,
@@ -43,6 +44,8 @@ struct s_data
 	bool			finished;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	print_lock;
+	pthread_mutex_t	meal_lock;
+	int				max_meal_reached;
 };
 
 struct s_philo
@@ -51,6 +54,7 @@ struct s_philo
 	t_data		*data;
 	int			idx;
 	long		last_meal;
+	int			total_meals;
 };
 
 int		ft_atoi(const char *s);
@@ -61,6 +65,10 @@ t_data	*init_data(int ac, char **av);
 t_philo	**init_philo(t_data *data);
 long	ft_timestamp(void);
 void	run_philosophers(t_data *data, t_philo **philo);
-
+void	print_status(t_philo *philo, t_status status);
+bool	handle_philo_rotation(t_data *data, t_philo *philo);
+void	do_sleep(t_data *data, t_philo *philo);
+void	do_eat(t_data *data, t_philo *philo, int right_fork);
+bool	is_dead(t_philo *philo, int extra_time);
 
 #endif

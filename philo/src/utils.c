@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:00:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/12 14:35:55 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:46:26 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <philo.h>
@@ -44,7 +44,7 @@ size_t	ft_strlen(const char *s)
 
 int	ft_strcmp(const char *str1, const char *str2)
 {
-	int	i;
+	int				i;
 	unsigned char	*s1;
 	unsigned char	*s2;
 
@@ -62,4 +62,30 @@ long	ft_timestamp(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 * 1000 + tv.tv_usec);
+}
+
+void	print_status(t_philo *philo, t_status status)
+{
+	t_data	*data;
+
+	data = philo->data;
+	pthread_mutex_lock(&data->print_lock);
+	if (!data->finished)
+	{
+		printf("[%ld] %d ", ft_timestamp() / 1000, philo->idx + 1);
+		if (status == THINKING)
+			printf("is thinking\n");
+		else if (status == HAS_FORK)
+			printf("has taken a fork\n");
+		else if (status == EATING)
+			printf("is eating\n");
+		else if (status == SLEEPING)
+			printf("is sleeping\n");
+		else if (status == DEAD)
+		{
+			printf("died\n");
+			data->finished = true;
+		}
+	}
+	pthread_mutex_unlock(&data->print_lock);
 }

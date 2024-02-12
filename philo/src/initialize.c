@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:25:29 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/12 15:00:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:41:24 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philo.h"
@@ -24,7 +24,7 @@ pthread_mutex_t	**init_forks(size_t count)
 	{
 		forks[i] = malloc(sizeof(pthread_mutex_t));
 		if (!forks[i])
-			return (NULL); // sus ?
+			return (NULL);
 		pthread_mutex_init(forks[i], NULL);
 		i++;
 	}
@@ -45,6 +45,8 @@ t_data	*init_data(int ac, char **av)
 	if (ac == 6)
 		data->max_meals = ft_atoi(av[5]);
 	pthread_mutex_init(&data->print_lock, NULL);
+	pthread_mutex_init(&data->meal_lock, NULL);
+	data->max_meal_reached = 0;
 	data->time_to_die = ft_atoi(av[2]) * 1000;
 	data->time_to_eat = ft_atoi(av[3]) * 1000;
 	data->time_to_sleep = ft_atoi(av[4]) * 1000;
@@ -66,10 +68,11 @@ t_philo	**init_philo(t_data *data)
 	{
 		philo[i] = malloc(sizeof(t_philo));
 		if (!philo[i])
-			return (NULL); // sus ?
+			return (NULL);
 		philo[i]->data = data;
 		philo[i]->idx = i;
 		philo[i]->last_meal = ft_timestamp();
+		philo[i]->total_meals = 0;
 		i++;
 	}
 	return (philo);
