@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:25:29 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/18 07:20:06 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:32:39 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_philo	**init_philo(t_data *data)
 		if (!philo[i])
 			return (NULL);
 		philo[i]->data = data;
+		philo[i]->is_eating = false;
 		philo[i]->idx = i;
 		philo[i]->last_meal = ft_timestamp();
 		philo[i]->total_meals = 0;

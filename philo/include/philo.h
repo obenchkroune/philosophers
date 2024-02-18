@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:28:03 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/18 07:40:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:33:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ struct s_data
 	int				philo_died;
 };
 
-// TODO: add status
 struct s_philo
 {
+	bool			is_eating;
 	t_data			*data;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	*left_fork;
@@ -73,9 +73,5 @@ t_philo	**init_philo(t_data *data);
 long	ft_timestamp(void);
 void	run_philosophers(t_data *data, t_philo **philo);
 void	print_status(t_philo *philo, t_status status);
-bool	handle_philo_rotation(t_data *data, t_philo *philo);
-void	do_sleep(t_data *data, t_philo *philo);
-void	do_eat(t_data *data, t_philo *philo, int right_fork);
-bool	is_dead(t_philo *philo, int extra_time);
 
 #endif

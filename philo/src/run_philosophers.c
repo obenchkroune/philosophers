@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:38:41 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/18 07:32:17 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:40:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	*check_death_routine(void *ptr)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->lock);
-		if (ft_timestamp() - philo->last_meal >= philo->data->time_to_die)
+		if (ft_timestamp() - philo->last_meal >= philo->data->time_to_die \
+			&& !philo->is_eating)
 		{
 			print_status(philo, DEAD);
 			pthread_mutex_unlock(&philo->lock);
@@ -42,6 +43,7 @@ void	take_forks(t_philo *philo)
 	print_status(philo, HAS_FORK);
 	print_status(philo, EATING);
 	pthread_mutex_lock(&philo->lock);
+	philo->is_eating = true;
 	philo->last_meal = ft_timestamp();
 	pthread_mutex_unlock(&philo->lock);
 	pthread_mutex_lock(&data->meals_lock);
@@ -58,6 +60,9 @@ void	put_forks(t_philo *philo)
 	data = philo->data;
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
+	pthread_mutex_lock(&philo->lock);
+	philo->is_eating = false;
+	pthread_mutex_unlock(&philo->lock);
 	print_status(philo, SLEEPING);
 	usleep(data->time_to_sleep * 1000);
 	print_status(philo, THINKING);
