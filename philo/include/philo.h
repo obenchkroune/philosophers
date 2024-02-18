@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:28:03 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/12 17:45:11 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/18 07:40:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef PHILO_H
 
 # define PHILO_H
@@ -36,27 +37,33 @@ enum e_status
 
 struct s_data
 {
+	long			start;
 	int				philo_count;
 	int				max_meals;
 	int				time_to_die;
 	int				time_to_sleep;
 	int				time_to_eat;
-	bool			finished;
 	pthread_mutex_t	**forks;
 	pthread_mutex_t	print_lock;
-	pthread_mutex_t	meal_lock;
-	int				max_meal_reached;
+	pthread_mutex_t	death_lock;
+	pthread_mutex_t	meals_lock;
+	int				max_meals_reached;
+	int				philo_died;
 };
 
+// TODO: add status
 struct s_philo
 {
-	pthread_t	thread_id;
-	t_data		*data;
-	int			idx;
-	long		last_meal;
-	int			total_meals;
+	t_data			*data;
+	pthread_mutex_t	lock;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	int				idx;
+	long			last_meal;
+	int				total_meals;
 };
 
+void	cleanup_philo(t_data *data, t_philo **philo);
 int		ft_atoi(const char *s);
 size_t	ft_strlen(const char *s);
 bool	check_errors(int ac, char **av);

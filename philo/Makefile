@@ -1,6 +1,6 @@
 NAME		=	philo
 CC			=	cc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude
+CFLAGS		=	-Wall -Werror -Wextra -Iinclude -g
 CLIBS		=	-lpthread
 
 SRC			=	$(shell find ./src -type f -name '*.c')

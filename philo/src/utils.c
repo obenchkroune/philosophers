@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:00:30 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/12 17:46:26 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/18 07:32:32 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <philo.h>
+
+#include "philo.h"
 
 int	ft_atoi(const char *s)
 {
@@ -61,7 +62,7 @@ long	ft_timestamp(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 * 1000 + tv.tv_usec);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 void	print_status(t_philo *philo, t_status status)
@@ -70,9 +71,16 @@ void	print_status(t_philo *philo, t_status status)
 
 	data = philo->data;
 	pthread_mutex_lock(&data->print_lock);
-	if (!data->finished)
+	if (!data->philo_died)
 	{
-		printf("[%ld] %d ", ft_timestamp() / 1000, philo->idx + 1);
+		pthread_mutex_lock(&data->meals_lock);
+		if (data->max_meals_reached == data->philo_count)
+		{
+			pthread_mutex_unlock(&data->death_lock);
+			return ;
+		}
+		pthread_mutex_unlock(&data->meals_lock);
+		printf("%-19ld %d ", ft_timestamp() - data->start, philo->idx + 1);
 		if (status == THINKING)
 			printf("is thinking\n");
 		else if (status == HAS_FORK)
@@ -83,8 +91,8 @@ void	print_status(t_philo *philo, t_status status)
 			printf("is sleeping\n");
 		else if (status == DEAD)
 		{
+			data->philo_died = 1;
 			printf("died\n");
-			data->finished = true;
 		}
 	}
 	pthread_mutex_unlock(&data->print_lock);

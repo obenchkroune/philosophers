@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   check_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: obenchkr <obenchkr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:58:57 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/12 17:41:06 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/18 06:43:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "philo.h"
 
 static bool	is_valid_number(const char *s)
