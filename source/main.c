@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 06:22:45 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/18 22:41:45 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/02/19 21:37:20 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/02/19 22:59:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	cleanup_philo(t_data *data, t_philo **philo)
+int	main(int ac, char **av)
 {
-	int	i;
+	t_philo	*philo;
 	
-	i = 0;
-	while (i < data->philo_count)
-	{
-		pthread_mutex_destroy(&philo[i]->lock);
-		i++;
-	}
-	i = 0;
-	pthread_mutex_destroy(&data->print_lock);
-	pthread_mutex_destroy(&data->meals_lock);
-	pthread_mutex_destroy(&data->death_lock);
-	while (i < data->philo_count)
-	{
-		pthread_mutex_destroy(data->forks[i]);
-		free(data->forks[i]);
-		i++;
-	}
+	if (!check_errors(ac, av))
+		return (1);
+	init_philo(&philo, ac, av);
+	run_philo(philo);
+	cleanup_philo(philo);
+	return (0);
 }

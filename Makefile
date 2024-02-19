@@ -1,10 +1,12 @@
-NAME		=	philo
-CC			=	cc
-CFLAGS		=	-Wall -Werror -Wextra -Iinclude -g
-CLIBS		=	-lpthread
+NAME	=	philo
 
-SRC			=	$(shell find ./src -type f -name '*.c')
-OBJ			=	$(SRC:.c=.o)
+CC		=	cc
+CFLAGS	=	-Wall -Werror -Wextra -Iinclude
+CLIBS	=	-lpthread
+
+SRC		=	$(shell find ./source -type f -name '*.c')
+OBJ		=	$(SRC:.c=.o)
+
 
 all: $(NAME)
 
