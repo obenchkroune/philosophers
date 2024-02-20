@@ -6,31 +6,11 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:56:03 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/19 23:43:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/20 05:48:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	smart_usleep(t_philo *philo, uint32_t time)
-{
-	long	start;
-	t_data	*data;
-
-	start = ft_timestamp();
-	data = philo->data;
-	while (ft_timestamp() - start < time)
-	{
-		pthread_mutex_lock(&data->mut);
-		if (data->philo_died)
-		{
-			pthread_mutex_unlock(&data->mut);
-			return ;
-		}
-		pthread_mutex_unlock(&data->mut);
-		usleep(100);
-	}
-}
 
 void	*philo_routine(void *ptr)
 {
@@ -39,26 +19,21 @@ void	*philo_routine(void *ptr)
 
 	philo = (t_philo *)ptr;
 	data = philo->data;
-	while (1)
+	if (data->count == 1)
 	{
-		pthread_mutex_lock(&data->mut);
-		if (data->philo_died)
-		{
-			pthread_mutex_unlock(&data->mut);
-			return (NULL);
-		}
-		pthread_mutex_unlock(&data->mut);
-		take_forks(philo);
-		print_state(philo, EATING);
-		pthread_mutex_lock(&philo->mut);
-		philo->last_meal = ft_timestamp();
-		pthread_mutex_unlock(&philo->mut);
-		smart_usleep(philo, data->time_to_eat);
-		put_forks(philo);
+		print_state(philo, HAS_FORK);
+		usleep(data->time_to_die * 1000);
+		print_state(philo, DEAD);
+		return (NULL);
+	}
+	while (!is_over(data))
+	{
+		eat(philo);
 		print_state(philo, SLEEPING);
-		smart_usleep(philo, data->time_to_sleep);
+		ft_usleep(philo, data->time_to_sleep);
 		print_state(philo, THINKING);
 	}
+	return (NULL);
 }
 
 void	*monitor_routine(void *ptr)
@@ -68,20 +43,13 @@ void	*monitor_routine(void *ptr)
 
 	philo = (t_philo *)ptr;
 	data = philo->data;
-	while (1)
-	{
-		pthread_mutex_lock(&philo->mut);
-		if (ft_timestamp() - philo->last_meal >= data->time_to_die)
-		{
-			print_state(philo, DEAD);
-			pthread_mutex_unlock(&philo->mut);
-			pthread_mutex_lock(&data->mut);
-			data->philo_died = true;
-			pthread_mutex_unlock(&data->mut);
-			return (NULL);
-		}
-		pthread_mutex_unlock(&philo->mut);
-	}
+	while (!is_over(data) && !is_dead(philo))
+		usleep(500);
+	print_state(philo, DEAD);
+	pthread_mutex_lock(&data->mut);
+	data->philo_died = true;
+	pthread_mutex_unlock(&data->mut);
+	return (NULL);
 }
 
 void	run_philo(t_philo *philo)
@@ -92,11 +60,18 @@ void	run_philo(t_philo *philo)
 	i = 0;
 	while (i < philo->data->count)
 	{
-		philo[i].last_meal = ft_timestamp();
+		pthread_create(&tid, NULL, &monitor_routine, &philo[i]);
+		pthread_detach(tid);
+		pthread_create(&philo[i].tid, NULL, &philo_routine, &philo[i]);
+		i += 2;
+	}
+	i = 1;
+	while (i < philo->data->count)
+	{
 		pthread_create(&philo[i].tid, NULL, &philo_routine, &philo[i]);
 		pthread_create(&tid, NULL, &monitor_routine, &philo[i]);
 		pthread_detach(tid);
-		i++;
+		i += 2;
 	}
 	i = 0;
 	while (i < philo->data->count)

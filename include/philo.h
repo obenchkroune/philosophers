@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:44:28 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/19 23:37:53 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/20 05:48:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,16 @@ typedef struct s_philo
 	uint32_t		left;
 	pthread_t		tid;
 	pthread_mutex_t	mut;
+	pthread_mutex_t	meal_mut;
 	t_data			*data;
 	long			last_meal;
+	bool			is_eating;
 }	t_philo;
 
+void	ft_usleep(t_philo *philo, uint32_t time);
+void	eat(t_philo *philo);
+bool	is_dead(t_philo *philo);
+bool	is_over(t_data *data);
 bool	check_errors(int ac, char **av);
 size_t	ft_strlen(const char *str);
 void	ft_putstrfd(char *str, int fd);
