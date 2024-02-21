@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 23:10:20 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/20 05:49:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/21 00:17:37 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ void	eat(t_philo *philo)
 	take_forks(philo);
 	print_state(philo, EATING);
 	pthread_mutex_lock(&philo->meal_mut);
+	if (++philo->total_meals == data->max_meals)
+	{
+		pthread_mutex_lock(&data->meals_mut);
+		data->max_meals_reached++;
+		pthread_mutex_unlock(&data->meals_mut);
+	}
 	philo->last_meal = ft_timestamp();
 	pthread_mutex_unlock(&philo->meal_mut);
 	usleep(1000 * data->time_to_eat);
