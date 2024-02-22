@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 21:45:36 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/19 22:31:58 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:57:18 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-#define USAGE "usage: ./philo \n<number_of_philosophers> \n<time_to_die> \n<time_to_eat> \
-\n<time_to_sleep> \n[optional:number_of_times_each_philosopher_must_eat]\n"
+#define USAGE "usage: ./philo <number_of_philosophers> <time_to_die> <time_to_eat> \
+<time_to_sleep> [optional:number_of_times_each_philosopher_must_eat]\n"
 
 /*
  * Check if the argument is a valid number / uint32 aka unsigned int

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 23:10:20 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/21 00:17:37 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:05:28 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_usleep(t_philo *philo, uint32_t time)
 	start = ft_timestamp();
 	data = philo->data;
 	while (ft_timestamp() - start < time && !is_over(data))
-		usleep(500);
+		usleep(1000);
 }
 
 void	print_state(t_philo *philo, t_state state)
@@ -83,5 +83,4 @@ void	eat(t_philo *philo)
 	philo->last_meal = ft_timestamp();
 	pthread_mutex_unlock(&philo->meal_mut);
 	usleep(1000 * data->time_to_eat);
-	put_forks(philo);
 }

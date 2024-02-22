@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:56:03 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/20 05:48:57 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/22 14:06:12 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ void	*philo_routine(void *ptr)
 		print_state(philo, DEAD);
 		return (NULL);
 	}
+	if (philo->idx % 2 != 0)
+		usleep(100);
 	while (!is_over(data))
 	{
 		eat(philo);
 		print_state(philo, SLEEPING);
+		put_forks(philo);
 		ft_usleep(philo, data->time_to_sleep);
 		print_state(philo, THINKING);
 	}
@@ -63,15 +66,7 @@ void	run_philo(t_philo *philo)
 		pthread_create(&tid, NULL, &monitor_routine, &philo[i]);
 		pthread_detach(tid);
 		pthread_create(&philo[i].tid, NULL, &philo_routine, &philo[i]);
-		i += 2;
-	}
-	i = 1;
-	while (i < philo->data->count)
-	{
-		pthread_create(&philo[i].tid, NULL, &philo_routine, &philo[i]);
-		pthread_create(&tid, NULL, &monitor_routine, &philo[i]);
-		pthread_detach(tid);
-		i += 2;
+		i++;
 	}
 	i = 0;
 	while (i < philo->data->count)
