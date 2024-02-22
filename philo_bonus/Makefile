@@ -1,10 +1,10 @@
-NAME	=	philo
+NAME	=	philo_bonus
 
 CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra -Iinclude
 CLIBS	=	-lpthread
 
-SRC		=	./source/actions.c ./source/checkers.c ./source/cleanup.c ./source/errors.c ./source/init.c ./source/main.c ./source/philo.c ./source/utils.c
+SRC		=	$(shell find ./source -type f -name '*.c')
 OBJ		=	$(SRC:.c=.o)
 
 

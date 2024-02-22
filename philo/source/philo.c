@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:56:03 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/22 16:23:35 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:13:27 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*monitor_routine(void *ptr)
 	philo = (t_philo *)ptr;
 	data = philo->data;
 	while (!is_over(data) && !is_dead(philo))
-		usleep(500);
+		usleep(1000);
 	print_state(philo, DEAD);
 	pthread_mutex_lock(&data->mut);
 	data->philo_died = true;
