@@ -6,11 +6,12 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 22:56:03 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/22 14:06:12 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:23:35 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
 
 void	*philo_routine(void *ptr)
 {
@@ -27,7 +28,7 @@ void	*philo_routine(void *ptr)
 		return (NULL);
 	}
 	if (philo->idx % 2 != 0)
-		usleep(100);
+		usleep(500);
 	while (!is_over(data))
 	{
 		eat(philo);
