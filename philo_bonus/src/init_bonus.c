@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:31:16 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 21:02:47 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/29 21:08:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*get_sem_name(int idx)
 void	init_individual_philo(t_philo *philo, t_data *data, uint32_t i)
 {
 	philo[i].data = data;
-	
 	philo[i].total_meals = 0;
 	philo[i].sem_name = get_sem_name(i);
 	philo[i].meal_sem = sem_open(philo[i].sem_name, \
