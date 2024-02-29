@@ -1,12 +1,22 @@
-NAME	=	philo
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/28 09:45:12 by obenchkr          #+#    #+#              #
+#    Updated: 2024/02/29 20:49:18 by obenchkr         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra -Iinclude
+CFLAGS	=	-Wall -Werror -Wextra -Iinc
 CLIBS	=	-lpthread
 
-SRC		=	./source/actions.c ./source/checkers.c ./source/cleanup.c ./source/errors.c ./source/init.c ./source/main.c ./source/philo.c ./source/utils.c
+NAME	=	philo
+SRC		=	src/actions.c src/cleanup.c src/errors.c src/init.c src/main.c src/philosopher.c src/utils.c
 OBJ		=	$(SRC:.c=.o)
-
 
 all: $(NAME)
 
@@ -25,4 +35,5 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
 .SECONDARY: $(OBJ)
