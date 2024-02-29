@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 01:52:24 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 20:50:52 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:56:42 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,24 @@ int	ft_atoi(const char *s)
 
 void	print_state(t_philo *philo, t_state state)
 {
+	t_data	*data;
+
+	data = philo->data;
 	pthread_mutex_lock(&philo->data->print_mut);
-	if (philo->data->philo_died)
+	if (!philo->data->philo_died)
 	{
-		pthread_mutex_unlock(&philo->data->print_mut);
-		return ;
+		printf("%-10u %d ", ft_timestamp() - data->start, philo->idx + 1);
+		if (state == HAS_FORK)
+			printf("has taken a fork\n");
+		else if (state == EATING)
+			printf("is eating\n");
+		else if (state == SLEEPING)
+			printf("is sleeping\n");
+		else if (state == THINKING)
+			printf("is thinking\n");
+		else if (state == DEAD)
+			printf("died\n");
 	}
-	printf("%-10u %d ", ft_timestamp() - philo->data->start, philo->idx + 1);
-	if (state == HAS_FORK)
-		printf("has taken a fork\n");
-	else if (state == EATING)
-		printf("is eating\n");
-	else if (state == SLEEPING)
-		printf("is sleeping\n");
-	else if (state == THINKING)
-		printf("is thinking\n");
-	else if (state == DEAD)
-		printf("died\n");
 	pthread_mutex_unlock(&philo->data->print_mut);
 }
 

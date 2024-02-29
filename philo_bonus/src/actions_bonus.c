@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:52:52 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 17:44:14 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:44:27 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	ft_eat(t_philo *philo)
 {
 	sem_wait(philo->meal_sem);
 	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
-	sem_post(philo->meal_sem);
 	philo->total_meals++;
 	print_state(philo, EATING);
 	usleep(philo->data->time_to_eat * 1000);
+	sem_post(philo->meal_sem);
 }
 
 void	ft_sleep(t_philo *philo)

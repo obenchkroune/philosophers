@@ -6,11 +6,12 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:50:22 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 20:52:47 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:55:10 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
 
 void	*check_death_routine(void *ptr)
 {
@@ -18,10 +19,8 @@ void	*check_death_routine(void *ptr)
 	u_int32_t	i;
 
 	philo = (t_philo *)ptr;
-	while (true)
+	while (!philo->data->philo_died)
 	{
-		if (philo->data->philo_died)
-			return (NULL);
 		pthread_mutex_lock(&philo->meal_mut);
 		if (ft_timestamp() >= philo->next_meal)
 		{
@@ -33,19 +32,16 @@ void	*check_death_routine(void *ptr)
 			return (pthread_mutex_unlock(&philo->meal_mut), NULL);
 		}
 		pthread_mutex_unlock(&philo->meal_mut);
-		usleep(1000);
+		usleep((philo->next_meal - ft_timestamp()) * 1000);
 	}
+	return (NULL);
 }
 
 void	*philo_routine(void *ptr)
 {
 	t_philo		*philo;
-	pthread_t	tid;
 
 	philo = (t_philo *)ptr;
-	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
-	pthread_create(&tid, NULL, &check_death_routine, philo);
-	pthread_detach(tid);
 	while (!philo->data->philo_died)
 	{
 		ft_take_forks(philo);
@@ -72,7 +68,7 @@ void	*max_meals_monitor(void *ptr)
 			return (NULL);
 		}
 		pthread_mutex_unlock(&data->meals_mut);
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -88,9 +84,15 @@ void	start_philo(t_philo *philo)
 	data->start = ft_timestamp();
 	while (i < data->count)
 	{
-		pthread_create(&tid, NULL, &max_meals_monitor, philo->data);
-		pthread_detach(tid);
+		philo[i].next_meal = ft_timestamp() + philo->data->time_to_die;
 		pthread_create(&philo[i].tid, NULL, &philo_routine, &philo[i]);
+		pthread_create(&tid, NULL, &check_death_routine, philo);
+		pthread_detach(tid);
+		if (philo->data->max_meals != -1)
+		{
+			pthread_create(&tid, NULL, &max_meals_monitor, philo->data);
+			pthread_detach(tid);
+		}
 		i++;
 	}
 }

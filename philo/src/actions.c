@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 02:12:15 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 20:59:54 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:58:02 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	smart_usleep(t_philo *philo, uint32_t ms)
 
 	end = ft_timestamp() + ms;
 	while (ft_timestamp() < end && !philo->data->philo_died)
-		usleep(500);
+		usleep(1000);
 }
 
 void	ft_take_forks(t_philo *philo)
 {
-	if (philo->idx % 2 == 0)
+	if (philo->idx % 2 != 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_state(philo, HAS_FORK);
@@ -40,7 +40,7 @@ void	ft_take_forks(t_philo *philo)
 
 void	ft_put_forks(t_philo *philo)
 {
-	if (philo->idx % 2 == 0)
+	if (philo->idx % 2 != 0)
 	{
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
@@ -62,9 +62,9 @@ void	ft_eat(t_philo *philo)
 		philo->data->max_meals_reached++;
 		pthread_mutex_unlock(&philo->data->meals_mut);
 	}
-	pthread_mutex_unlock(&philo->meal_mut);
 	print_state(philo, EATING);
 	smart_usleep(philo, philo->data->time_to_eat);
+	pthread_mutex_unlock(&philo->meal_mut);
 }
 
 void	ft_sleep(t_philo *philo)
