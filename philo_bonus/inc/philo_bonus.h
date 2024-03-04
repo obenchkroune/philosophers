@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 09:47:07 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 20:10:40 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/01 22:37:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ typedef struct s_philo
 	sem_t		*meal_sem;
 }	t_philo;
 
-void		cleanup_exit(int code, t_philo *philo);
-void		cleanup_philo(t_philo *philo);
+void		cleanup_philo(t_philo *philo, bool cleanup_mut);
 char		*ft_itoa(int n);
 char		*ft_strjoin(const char *s1, const char *s2);
 bool		has_errors(int ac, char **av);

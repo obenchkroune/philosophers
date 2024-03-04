@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:05:53 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 20:19:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/01 22:38:54 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ void	*check_death_routine(void *ptr)
 
 	philo = (t_philo *)ptr;
 	while (!is_dead(philo))
-	{
 		usleep(500);
-	}
 	print_state(philo, DEAD);
-	cleanup_philo(philo - philo->idx);
+	cleanup_philo(philo - philo->idx, false);
 	exit(1);
 }
 
@@ -51,7 +49,8 @@ void	philo_routine(t_philo *philo)
 		ft_sleep(philo);
 		print_state(philo, THINKING);
 	}
-	cleanup_philo(philo - philo->idx);
+	pthread_join(tid, NULL);
+	cleanup_philo(philo - philo->idx, false);
 }
 
 void	start_philo(t_philo *philo)
