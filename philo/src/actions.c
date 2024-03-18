@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 02:12:15 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 21:16:15 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/13 06:49:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,16 @@ void	smart_usleep(t_philo *philo, uint32_t ms)
 
 void	ft_take_forks(t_philo *philo)
 {
-	if (philo->idx % 2 == 0)
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_state(philo, HAS_FORK);
-		pthread_mutex_lock(philo->right_fork);
-	}
-	else
-	{
-		pthread_mutex_lock(philo->right_fork);
-		print_state(philo, HAS_FORK);
-		pthread_mutex_lock(philo->left_fork);
-	}
+	pthread_mutex_lock(philo->right_fork);
+	print_state(philo, HAS_FORK);
+	pthread_mutex_lock(philo->left_fork);
 	print_state(philo, HAS_FORK);
 }
 
 void	ft_put_forks(t_philo *philo)
 {
-	if (philo->idx % 2 == 0)
-	{
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-	}
-	else
-	{
-		pthread_mutex_unlock(philo->left_fork);
-		pthread_mutex_unlock(philo->right_fork);
-	}
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 }
 
 void	ft_eat(t_philo *philo)

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:50:22 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 21:17:55 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/03/13 06:49:58 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,10 @@ void	*philo_routine(void *ptr)
 	pthread_t	tid;
 
 	philo = (t_philo *)ptr;
-	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
 	pthread_create(&tid, NULL, &check_death_routine, philo);
 	pthread_detach(tid);
+	if (philo->idx % 2 != 0)
+		usleep(500);
 	while (!philo->data->philo_died)
 	{
 		ft_take_forks(philo);
@@ -90,6 +91,7 @@ void	start_philo(t_philo *philo)
 	{
 		pthread_create(&tid, NULL, &max_meals_monitor, philo->data);
 		pthread_detach(tid);
+		philo[i].next_meal = ft_timestamp() + data->time_to_die;
 		pthread_create(&philo[i].tid, NULL, &philo_routine, &philo[i]);
 		i++;
 	}
