@@ -5,29 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 02:40:25 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/29 21:00:17 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/04/01 14:19:10 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/04/01 17:23:49 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	cleanup_philo(t_philo *philo)
+static void	free_forks(pthread_mutex_t *forks, int count)
 {
-	t_data		*data;
-	uint32_t	i;
+	int	i;
 
-	data = philo->data;
-	pthread_mutex_destroy(&data->print_mut);
-	pthread_mutex_destroy(&data->meals_mut);
 	i = 0;
-	while (i < data->count)
+	while (i < count)
 	{
-		pthread_mutex_destroy(&data->forks[i]);
-		pthread_mutex_destroy(&philo[i].meal_mut);
+		pthread_mutex_destroy(&forks[i]);
 		i++;
 	}
-	free(data->forks);
-	free(philo);
-	free(data);
+	free(forks);
+}
+
+static void	free_data(t_data *data)
+{
+	free_forks(data->forks, data->philo_count);
+	pthread_mutex_destroy(&data->print_mut);
+	pthread_mutex_destroy(&data->finished_mut);
+}
+
+static void	free_philos(t_philo *philo, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		pthread_mutex_destroy(&philo[i].lock);
+		i++;
+	}
+}
+
+void	cleanup(t_data *data, t_philo *philo)
+{
+	free_philos(philo, data->philo_count);
+	free_data(data);
 }
