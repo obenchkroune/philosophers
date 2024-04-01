@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 13:12:58 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/01 17:24:02 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:03:48 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,20 @@ typedef struct s_data
 	uint32_t		time_to_die;
 	uint32_t		time_to_eat;
 	uint32_t		time_to_sleep;
-	uint32_t		max_meals;
+	int32_t			max_meals;
 	uint32_t		max_meals_reached;
 	int				finished;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mut;
 	pthread_mutex_t	finished_mut;
+	pthread_mutex_t	max_meals_mut;
 }	t_data;
 
 typedef struct s_philo
 {
-	int				id;
-	int				eat_count;
+	uint32_t		id;
 	uint32_t		last_meal;
-	uint32_t		total_meals;
+	int32_t			total_meals;
 	t_data			*data;
 	pthread_t		thread;
 	pthread_mutex_t	lock;

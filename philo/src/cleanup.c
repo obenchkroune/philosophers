@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 14:19:10 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/01 17:23:49 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/01 22:09:40 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	free_forks(pthread_mutex_t *forks, int count)
 	int	i;
 
 	i = 0;
-	while (i < count)
+	while (i < count && forks)
 	{
 		pthread_mutex_destroy(&forks[i]);
 		i++;
@@ -30,6 +30,7 @@ static void	free_data(t_data *data)
 	free_forks(data->forks, data->philo_count);
 	pthread_mutex_destroy(&data->print_mut);
 	pthread_mutex_destroy(&data->finished_mut);
+	pthread_mutex_destroy(&data->max_meals_mut);
 }
 
 static void	free_philos(t_philo *philo, int count)

@@ -1,7 +1,7 @@
 NAME		=	philo
 CC			=	cc
 INCLUDES	=	-I./includes
-CFLAGS		=	-Wall -Wextra -Werror $(INCLUDES) -fsanitize=thread -g
+CFLAGS		=	-Wall -Wextra -Werror $(INCLUDES) -fsanitize=address -g
 CLIBS		=	-lpthread
 SRCS		=	$(shell find ./src -type f -name "*.c")
 OBJS		=	$(SRCS:.c=.o)
