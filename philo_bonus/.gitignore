@@ -1,4 +1,2 @@
-**/*.o
+.cache
 compile_commands.json
-philo_bonus
-.clangd

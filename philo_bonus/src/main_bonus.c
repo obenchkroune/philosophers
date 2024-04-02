@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/01 22:14:56 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/01 22:15:51 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/02/28 09:46:37 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/01 22:38:18 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,20 @@
 
 int	main(int ac, char **av)
 {
+	t_philo		*philo;
+	uint32_t	i;
+	int			wstatus;
+
+	if (has_errors(ac, av))
+		return (1);
+	philo = init_philo(ac, av);
+	start_philo(philo);
+	waitpid(-1, &wstatus, 0);
+	while (WEXITSTATUS(wstatus) == 0 && waitpid(-1, &wstatus, 0) != -1)
+		;
+	i = 0;
+	while (i < philo->data->count)
+		kill(philo[i++].pid, SIGTERM);
+	cleanup_philo(philo, true);
 	return (0);
 }

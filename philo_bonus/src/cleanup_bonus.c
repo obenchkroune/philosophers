@@ -1,23 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_bonus.h                                      :+:      :+:    :+:   */
+/*   cleanup_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/01 22:14:25 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/01 22:14:50 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/02/29 15:35:21 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/03/01 22:37:30 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_BONUS_H
-# define PHILO_BONUS_H
+#include "philo_bonus.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include <pthread.h>
-# include <sys/time.h>
-# include <semaphore.h>
+void	cleanup_philo(t_philo *philo, bool cleanup_mut)
+{
+	t_data		*data;
+	uint32_t	i;
 
-#endif
+	data = philo->data;
+	if (cleanup_mut)
+	{
+		sem_close(data->forks);
+		sem_close(data->print_sem);
+	}
+	i = 0;
+	while (i < data->count)
+	{
+		free(philo[i].sem_name);
+		if (cleanup_mut)
+			sem_close(philo[i].meal_sem);
+		i++;
+	}
+	free(data);
+	free(philo);
+}

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 01:52:24 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/02 00:40:38 by obenchkr         ###   ########.fr       */
+/*   Created: 2024/02/29 15:33:14 by obenchkr          #+#    #+#             */
+/*   Updated: 2024/02/29 20:19:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 int	ft_atoi(const char *s)
 {
@@ -39,12 +39,7 @@ int	ft_atoi(const char *s)
 
 void	print_state(t_philo *philo, t_state state)
 {
-	pthread_mutex_lock(&philo->data->print_mut);
-	if (philo_died(philo) || reached_required_meals(philo))
-	{
-		pthread_mutex_unlock(&philo->data->print_mut);
-		return ;
-	}
+	sem_wait(philo->data->print_sem);
 	printf("%-10u %d ", ft_timestamp() - philo->data->start, philo->idx + 1);
 	if (state == HAS_FORK)
 		printf("has taken a fork\n");
@@ -55,8 +50,11 @@ void	print_state(t_philo *philo, t_state state)
 	else if (state == THINKING)
 		printf("is thinking\n");
 	else if (state == DEAD)
+	{
 		printf("died\n");
-	pthread_mutex_unlock(&philo->data->print_mut);
+		return ;
+	}
+	sem_post(philo->data->print_sem);
 }
 
 uint32_t	ft_timestamp(void)

@@ -1,26 +1,39 @@
-NAME		=	philo
-CC			=	cc
-INCLUDES	=	-I./includes
-CFLAGS		=	-Wall -Wextra -Werror $(INCLUDES) -fsanitize=address -g
-CLIBS		=	-lpthread
-SRCS		=	$(shell find ./src -type f -name "*.c")
-OBJS		=	$(SRCS:.c=.o)
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/28 09:45:12 by obenchkr          #+#    #+#              #
+#    Updated: 2024/04/02 00:36:20 by obenchkr         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+CC		=	cc
+CFLAGS	=	-Wall -Werror -Wextra -Iinc -g3 -fsanitize=thread
+CLIBS	=	-lpthread
+
+NAME	=	philo
+SRC		=	src/actions.c src/cleanup.c src/errors.c src/init.c src/main.c src/philosopher.c src/utils.c src/atomic_checkers.c
+OBJ		=	$(SRC:.c=.o)
+
+all: $(NAME)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(NAME)
-
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(CLIBS)
+$(NAME): $(OBJ)
+	$(CC) $(CFLAGS) $^ $(CLIBS) -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -rf $(OBJ)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -rf $(NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean re
-.SECONDARY: $(OBJS)
+
+.SECONDARY: $(OBJ)
