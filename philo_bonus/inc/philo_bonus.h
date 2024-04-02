@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 09:47:07 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/03/01 22:37:59 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/02 01:43:04 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,7 @@ typedef struct s_philo
 	int			total_meals;
 	uint32_t	next_meal;
 	char		*sem_name;
-	sem_t		*meal_sem;
+	sem_t		*lock;
 }	t_philo;
-
-void		cleanup_philo(t_philo *philo, bool cleanup_mut);
-char		*ft_itoa(int n);
-char		*ft_strjoin(const char *s1, const char *s2);
-bool		has_errors(int ac, char **av);
-int			ft_atoi(const char *s);
-void		print_state(t_philo *philo, t_state state);
-uint32_t	ft_timestamp(void);
-size_t		ft_strlen(const char *str);
-int			ft_strcmp(const char *str1, const char *str2);
-t_philo		*init_philo(int ac, char **av);
-void		ft_take_forks(t_philo *philo);
-void		ft_put_forks(t_philo *philo);
-void		ft_eat(t_philo *philo);
-void		ft_sleep(t_philo *philo);
-void		start_philo(t_philo *philo);
-char		*ft_itoa(int n);
 
 #endif
