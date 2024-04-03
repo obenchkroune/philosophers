@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 02:12:15 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/02 01:06:29 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:55:58 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,20 @@ void	smart_usleep(t_philo *philo, uint32_t ms)
 
 void	ft_take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(philo->right_fork);
-	print_state(philo, HAS_FORK);
-	pthread_mutex_lock(philo->left_fork);
-	print_state(philo, HAS_FORK);
+	if (philo->idx % 2 == 0)
+	{
+		pthread_mutex_lock(philo->right_fork);
+		print_state(philo, HAS_FORK);
+		pthread_mutex_lock(philo->left_fork);
+		print_state(philo, HAS_FORK);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->left_fork);
+		print_state(philo, HAS_FORK);
+		pthread_mutex_lock(philo->right_fork);
+		print_state(philo, HAS_FORK);
+	}
 }
 
 void	ft_put_forks(t_philo *philo)

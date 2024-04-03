@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:50:22 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/02 01:05:36 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:59:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ void	*philo_routine(void *ptr)
 
 	philo = (t_philo *)ptr;
 	pthread_create(&tid, NULL, &check_death_routine, philo);
-	pthread_detach(tid);
-	if (philo->idx % 2 != 0)
-		usleep(500);
 	while (!philo_died(philo) && !reached_required_meals(philo))
 	{
 		ft_take_forks(philo);
