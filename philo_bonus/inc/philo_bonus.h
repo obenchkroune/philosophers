@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 09:47:07 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/02 01:43:04 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/03 00:43:11 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ typedef enum e_state
 typedef struct s_data
 {
 	uint32_t	start;
-	uint32_t	count;
+	uint32_t	philo_count;
 	uint32_t	time_to_die;
 	uint32_t	time_to_eat;
 	uint32_t	time_to_sleep;
 	int			max_meals;
 	sem_t		*forks;
 	sem_t		*print_sem;
+	sem_t		*stop_sem;
 }	t_data;
 
 typedef struct s_philo
@@ -54,8 +55,21 @@ typedef struct s_philo
 	int			idx;
 	int			total_meals;
 	uint32_t	next_meal;
-	char		*sem_name;
-	sem_t		*lock;
+	sem_t		*sem;
 }	t_philo;
+
+void		cleanup_philo(t_philo *philo);
+bool		has_errors(int ac, char **av);
+int			ft_atoi(const char *s);
+void		print_state(t_philo *philo, t_state state);
+uint32_t	ft_timestamp(void);
+size_t		ft_strlen(const char *str);
+int			ft_strcmp(const char *str1, const char *str2);
+t_philo		*init_philo(int ac, char **av);
+void		ft_take_forks(t_philo *philo);
+void		ft_put_forks(t_philo *philo);
+void		ft_eat(t_philo *philo);
+void		ft_sleep(t_philo *philo);
+void		start_philo(t_philo *philo);
 
 #endif

@@ -6,12 +6,12 @@
 #    By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/29 21:05:41 by obenchkr          #+#    #+#              #
-#    Updated: 2024/04/02 01:11:28 by obenchkr         ###   ########.fr        #
+#    Updated: 2024/04/03 00:37:12 by obenchkr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra -Iinc -fsanitize=thread -g3
+CC		=	clang
+CFLAGS	=	-Wall -Werror -Wextra -Iinc -g3 -fsanitize=thread
 CLIBS	=	-lpthread
 
 NAME	=	philo_bonus
