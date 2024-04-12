@@ -6,12 +6,12 @@
 #    By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 09:45:12 by obenchkr          #+#    #+#              #
-#    Updated: 2024/04/02 00:36:20 by obenchkr         ###   ########.fr        #
+#    Updated: 2024/04/12 17:12:58 by oussama          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra -Iinc -g3 -fsanitize=thread
+CFLAGS	=	-Wall -Werror -Wextra -Iinc
 CLIBS	=	-lpthread
 
 NAME	=	philo
