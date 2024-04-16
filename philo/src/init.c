@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 02:00:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/02 00:59:36 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/16 01:37:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ t_philo	*init_philo(int ac, char **av)
 		philo[i].left_fork = &data->forks[(i + 1) % data->count];
 		philo[i].right_fork = &data->forks[i];
 		philo[i].total_meals = 0;
-		pthread_mutex_init(&philo[i].mutex, NULL);
-		i++;
+		pthread_mutex_init(&philo[i++].mutex, NULL);
 	}
 	return (philo);
 }
