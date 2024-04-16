@@ -50,6 +50,7 @@ static t_data	*init_data(int ac, char **av)
 	pthread_mutex_init(&data->print_mut, NULL);
 	pthread_mutex_init(&data->meals_mut, NULL);
 	pthread_mutex_init(&data->death_mut, NULL);
+	pthread_mutex_init(&data->start_mut, NULL);
 	return (data);
 }
 

@@ -39,13 +39,16 @@ int	ft_atoi(const char *s)
 
 void	print_state(t_philo *philo, t_state state)
 {
+	uint32_t	time;
+
+	time = ft_timestamp() - philo->data->start;
 	pthread_mutex_lock(&philo->data->print_mut);
 	if (philo_died(philo) || reached_required_meals(philo))
 	{
 		pthread_mutex_unlock(&philo->data->print_mut);
 		return ;
 	}
-	printf("%-10u %d ", ft_timestamp() - philo->data->start, philo->idx + 1);
+	printf("%-10u %d ", time, philo->idx + 1);
 	if (state == HAS_FORK)
 		printf("has taken a fork\n");
 	else if (state == EATING)

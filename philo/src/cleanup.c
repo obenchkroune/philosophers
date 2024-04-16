@@ -21,6 +21,7 @@ void	cleanup_philo(t_philo *philo)
 	pthread_mutex_destroy(&data->print_mut);
 	pthread_mutex_destroy(&data->meals_mut);
 	pthread_mutex_destroy(&data->death_mut);
+	pthread_mutex_destroy(&data->start_mut);
 	i = 0;
 	while (i < data->count)
 	{

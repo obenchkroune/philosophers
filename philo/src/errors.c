@@ -14,35 +14,41 @@
 
 static bool	is_valid_unsigned(const char *str)
 {
-	size_t	i;
-
 	if (ft_strlen(str) > 10 || (ft_strlen(str) == 10 && \
 		ft_strcmp(str, "4294967295") > 0))
 		return (false);
-	i = 0;
-	while (str[i])
+	return (true);
+}
+
+static bool	is_valid_number(const char *nbr)
+{
+	while (*nbr)
 	{
-		if (str[i] < '0' || str[i] > '9')
+		if (*nbr > '9' || *nbr < '0')
 			return (false);
-		i++;
+		nbr++;
 	}
 	return (true);
 }
 
 bool	has_errors(int ac, char **av)
 {
+	size_t	i;
+
+	i = 1;
 	if (ac != 5 && ac != 6)
 	{
-		printf("Error\n");
+		printf("Invalid number of arguments\n");
 		return (true);
 	}
-	while (*++av)
+	while (av[i])
 	{
-		if (!is_valid_unsigned(*av))
+		if (!is_valid_number(av[i]) || !is_valid_unsigned(av[i]))
 		{
-			printf("invalid argument: %s\n", *av);
+			printf("Invalid argument: %s\n", av[i]);
 			return (true);
 		}
+		i++;
 	}
 	return (false);
 }

@@ -41,6 +41,8 @@ void	*philo_routine(void *ptr)
 	pthread_t	tid;
 
 	philo = (t_philo *)ptr;
+	pthread_mutex_lock(&philo->data->start_mut);
+	pthread_mutex_unlock(&philo->data->start_mut);
 	pthread_create(&tid, NULL, &check_death_routine, philo);
 	while (!philo_died(philo) && !reached_required_meals(philo))
 	{
@@ -61,11 +63,13 @@ void	start_philo(t_philo *philo)
 
 	i = 0;
 	data = philo->data;
-	data->start = ft_timestamp();
+	pthread_mutex_lock(&philo->data->start_mut);
 	while (i < data->count)
 	{
 		philo[i].next_meal = ft_timestamp() + data->time_to_die;
 		pthread_create(&philo[i].tid, NULL, &philo_routine, &philo[i]);
 		i++;
 	}
+	data->start = ft_timestamp();
+	pthread_mutex_unlock(&philo->data->start_mut);
 }
