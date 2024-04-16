@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra -Iinc -fsanitize=thread -g
+CFLAGS	=	-Wall -Werror -Wextra -Iinc
 CLIBS	=	-lpthread
 
 NAME	=	philo_bonus
