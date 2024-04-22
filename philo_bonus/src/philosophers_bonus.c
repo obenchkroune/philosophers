@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:05:53 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/03 00:41:36 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:37:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	*check_death_routine(t_philo	*philo)
 {
 	while (!is_dead(philo))
 		usleep(1000);
-	print_state(philo, DEAD);
 	sem_post(philo->data->stop_sem);
+	print_state(philo, DEAD);
 	return (NULL);
 }
 
@@ -37,6 +37,10 @@ void	philo_routine(t_philo *philo)
 {
 	pthread_t	tid;
 
+	sem_wait(philo->data->sync_sem);
+	sem_post(philo->data->sync_sem);
+	philo->data->start = ft_timestamp();
+	philo->next_meal = philo->data->start + philo->data->time_to_die;
 	pthread_create(&tid, NULL, (void *)check_death_routine, philo);
 	pthread_detach(tid);
 	while (true)
@@ -54,7 +58,7 @@ void	start_philo(t_philo *philo)
 	uint32_t	i;
 
 	i = 0;
-	philo->data->start = ft_timestamp();
+	sem_wait(philo->data->sync_sem);
 	while (i < philo->data->philo_count)
 	{
 		philo[i].pid = fork();
@@ -65,4 +69,5 @@ void	start_philo(t_philo *philo)
 		}
 		i++;
 	}
+	sem_post(philo->data->sync_sem);
 }

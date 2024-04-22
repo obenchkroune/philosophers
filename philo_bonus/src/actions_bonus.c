@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:52:52 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/03 00:35:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/22 19:26:53 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ void	ft_take_forks(t_philo *philo)
 	t_data	*data;
 
 	data = philo->data;
+	sem_wait(philo->data->meal_sem);
 	sem_wait(data->forks);
 	print_state(philo, HAS_FORK);
 	sem_wait(data->forks);
 	print_state(philo, HAS_FORK);
+	sem_post(philo->data->meal_sem);
 }
 
 void	ft_put_forks(t_philo *philo)
