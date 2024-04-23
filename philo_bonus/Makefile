@@ -6,23 +6,21 @@
 #    By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/29 21:05:41 by obenchkr          #+#    #+#              #
-#    Updated: 2024/04/22 22:57:18 by obenchkr         ###   ########.fr        #
+#    Updated: 2024/04/23 03:44:59 by obenchkr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC		=	cc
-CFLAGS	=	-Wall -Werror -Wextra -Iinc
-CLIBS	=	-lpthread
+CC			=	cc
+CFLAGS		=	-Wall -Werror -Wextra -Iinc
+CLIBS		=	-lpthread
 
-NAME	=	philo_bonus
-SRC		=	./src/cleanup_bonus.c ./src/utils_bonus.c ./src/philosophers_bonus.c \
-			./src/main_bonus.c ./src/actions_bonus.c ./src/errors_bonus.c ./src/init_bonus.c
-OBJ		=	$(SRC:.c=.o)
+NAME		=	philo_bonus
+SRC_FILES	=	actions_bonus.c cleanup_bonus.c errors_bonus.c init_bonus.c \
+				main_bonus.c philosophers_bonus.c utils_bonus.c
+SRC			=	$(addprefix src/, $(SRC_FILES))
+OBJ			=	$(SRC:.c=.o)
 
 all: $(NAME)
-
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $^ $(CLIBS) -o $@

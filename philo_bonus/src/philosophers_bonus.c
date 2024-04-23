@@ -6,28 +6,28 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:05:53 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/22 19:37:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 03:21:00 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-bool	is_dead(t_philo *philo)
+void	*check_death_routine(t_philo *philo)
 {
-	sem_wait(philo->sem);
-	if (philo->next_meal > ft_timestamp())
-	{
-		sem_post(philo->sem);
-		return (false);
-	}
-	sem_post(philo->sem);
-	return (true);
-}
+	uint32_t	next_meal;
 
-void	*check_death_routine(t_philo	*philo)
-{
-	while (!is_dead(philo))
-		usleep(1000);
+	while (1)
+	{
+		sem_wait(philo->sem);
+		if (ft_timestamp() >= philo->next_meal)
+		{
+			sem_post(philo->sem);
+			break ;
+		}
+		next_meal = philo->next_meal;
+		sem_post(philo->sem);
+		usleep((next_meal - ft_timestamp() - 1) * 1000);
+	}
 	sem_post(philo->data->stop_sem);
 	print_state(philo, DEAD);
 	return (NULL);
@@ -40,7 +40,7 @@ void	philo_routine(t_philo *philo)
 	sem_wait(philo->data->sync_sem);
 	sem_post(philo->data->sync_sem);
 	philo->data->start = ft_timestamp();
-	philo->next_meal = philo->data->start + philo->data->time_to_die;
+	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
 	pthread_create(&tid, NULL, (void *)check_death_routine, philo);
 	pthread_detach(tid);
 	while (true)
