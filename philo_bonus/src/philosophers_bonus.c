@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:05:53 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 03:50:49 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:33:46 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	*check_death_routine(t_philo *philo)
 {
-	uint32_t	next_meal;
-
 	while (1)
 	{
 		sem_wait(philo->sem);
@@ -24,9 +22,8 @@ void	*check_death_routine(t_philo *philo)
 			sem_post(philo->sem);
 			break ;
 		}
-		next_meal = philo->next_meal;
 		sem_post(philo->sem);
-		usleep((next_meal - ft_timestamp()) * 1000);
+		usleep(1000);
 	}
 	sem_post(philo->data->stop_sem);
 	print_state(philo, DEAD);
@@ -37,10 +34,7 @@ void	philo_routine(t_philo *philo)
 {
 	pthread_t	tid;
 
-	sem_wait(philo->data->sync_sem);
-	sem_post(philo->data->sync_sem);
-	philo->data->start = ft_timestamp();
-	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
+	philo->next_meal = philo->data->start + philo->data->time_to_die;
 	pthread_create(&tid, NULL, (void *)check_death_routine, philo);
 	pthread_detach(tid);
 	while (true)
@@ -58,7 +52,7 @@ void	start_philo(t_philo *philo)
 	uint32_t	i;
 
 	i = 0;
-	sem_wait(philo->data->sync_sem);
+	philo->data->start = ft_timestamp();
 	while (i < philo->data->philo_count)
 	{
 		philo[i].pid = fork();
@@ -69,5 +63,4 @@ void	start_philo(t_philo *philo)
 		}
 		i++;
 	}
-	sem_post(philo->data->sync_sem);
 }
