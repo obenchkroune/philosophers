@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:50:22 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 03:17:25 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 03:49:30 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*check_death_routine(void *ptr)
 		}
 		next_meal = philo->next_meal;
 		pthread_mutex_unlock(&philo->mutex);
-		usleep((next_meal - ft_timestamp() - 1) * 1000);
+		usleep((next_meal - ft_timestamp()) * 1000);
 	}
 	return (NULL);
 }
