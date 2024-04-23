@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 02:40:25 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/02 00:51:20 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:03:16 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	cleanup_philo(t_philo *philo)
 	pthread_mutex_destroy(&data->print_mut);
 	pthread_mutex_destroy(&data->meals_mut);
 	pthread_mutex_destroy(&data->death_mut);
-	pthread_mutex_destroy(&data->start_mut);
 	i = 0;
 	while (i < data->count)
 	{

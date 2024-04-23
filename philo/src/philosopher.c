@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:50:22 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 03:49:30 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:05:57 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 void	*check_death_routine(void *ptr)
 {
 	t_philo		*philo;
-	uint32_t	next_meal;
 
 	philo = (t_philo *)ptr;
 	while (!reached_required_meals(philo) && !philo_died(philo))
 	{
 		pthread_mutex_lock(&philo->mutex);
-		if (ft_timestamp() >= philo->next_meal)
+		if (ft_timestamp() > philo->next_meal)
 		{
 			pthread_mutex_unlock(&philo->mutex);
 			print_state(philo, DEAD);
@@ -30,21 +29,17 @@ void	*check_death_routine(void *ptr)
 			pthread_mutex_unlock(&philo->data->death_mut);
 			return (NULL);
 		}
-		next_meal = philo->next_meal;
 		pthread_mutex_unlock(&philo->mutex);
-		usleep((next_meal - ft_timestamp()) * 1000);
+		usleep(1000);
 	}
 	return (NULL);
 }
 
-void	*philo_routine(void *ptr)
+void	*philo_routine(t_philo *philo)
 {
-	t_philo		*philo;
 	pthread_t	tid;
 
-	philo = (t_philo *)ptr;
-	pthread_mutex_lock(&philo->data->start_mut);
-	pthread_mutex_unlock(&philo->data->start_mut);
+	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
 	pthread_create(&tid, NULL, &check_death_routine, philo);
 	while (!philo_died(philo) && !reached_required_meals(philo))
 	{
@@ -64,14 +59,12 @@ void	start_philo(t_philo *philo)
 	t_data		*data;
 
 	data = philo->data;
-	pthread_mutex_lock(&philo->data->start_mut);
 	i = 0;
+	data->start = ft_timestamp();
 	while (i < data->count)
 	{
 		philo[i].next_meal = ft_timestamp() + data->time_to_die;
-		pthread_create(&philo[i].tid, NULL, &philo_routine, &philo[i]);
+		pthread_create(&philo[i].tid, NULL, (void *)philo_routine, &philo[i]);
 		i += 1;
 	}
-	data->start = ft_timestamp();
-	pthread_mutex_unlock(&philo->data->start_mut);
 }
