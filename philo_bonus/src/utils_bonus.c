@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:33:14 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 23:58:02 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/24 00:08:01 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	print_state(t_philo *philo, char *state)
 		exit(0);
 	sem_wait(philo->data->print_sem);
 	printf("%-20u %d %s\n", time, philo->idx + 1, state);
+	if (ft_strcmp(state, DEAD) == 0)
+		return ;
 	sem_post(philo->data->print_sem);
 }
 

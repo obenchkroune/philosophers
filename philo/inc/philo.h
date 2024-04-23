@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 01:46:31 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 23:40:32 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/24 00:12:50 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # define ARG_COUNT_ERROR \
 "Invalid number of arguments\n"
 # define MS_ERROR \
-"The time_to_die / time_to_sleep / time_to_eat must be > 60ms.\n"
+"The time_to_die / time_to_sleep / time_to_eat must be > 60ms\n"
 # define PHILO_COUNT_ERROR \
-"The philo_count must be between 1 and 250.\n"
+"The philo_count must be between 1 and 250\n"
 # define ARG_ERROR \
-"Invalid argument: %s.\n"
+"Invalid argument: %s\n"
 
 # include <sys/time.h>
 # include <unistd.h>
@@ -31,14 +31,11 @@
 # include <stdint.h>
 # include <string.h>
 
-typedef enum e_state
-{
-	HAS_FORK,
-	EATING,
-	SLEEPING,
-	THINKING,
-	DEAD
-}	t_state;
+# define HAS_FORK "has taken a fork"
+# define EATING "is eating"
+# define SLEEPING "is sleeping"
+# define THINKING "is thinking"
+# define DEAD "died"
 
 typedef struct s_data
 {
@@ -72,7 +69,7 @@ size_t		ft_strlen(const char *str);
 int			ft_atoi(const char *s);
 t_philo		*init_philo(int ac, char **av);
 uint32_t	ft_timestamp(void);
-void		print_state(t_philo *philo, t_state state);
+void		print_state(t_philo *philo, char *state);
 int			ft_strcmp(const char *str1, const char *str2);
 
 /* Actions */

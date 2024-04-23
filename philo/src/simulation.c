@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:50:22 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 23:41:18 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/24 00:11:12 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	*check_death_routine(void *ptr)
 		if (ft_timestamp() > philo->next_meal)
 		{
 			pthread_mutex_unlock(&philo->mutex);
-			print_state(philo, DEAD);
 			pthread_mutex_lock(&philo->data->death_mut);
 			philo->data->philo_died = true;
 			pthread_mutex_unlock(&philo->data->death_mut);
+			print_state(philo, DEAD);
 			return (NULL);
 		}
 		pthread_mutex_unlock(&philo->mutex);

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 09:47:07 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 23:51:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/24 00:12:32 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # define ARG_COUNT_ERROR \
 "Invalid number of arguments\n"
 # define MS_ERROR \
-"The time_to_die / time_to_sleep / time_to_eat must be > 60ms.\n"
+"The time_to_die / time_to_sleep / time_to_eat must be > 60ms\n"
 # define PHILO_COUNT_ERROR \
-"The philo_count must be between 1 and 250.\n"
+"The philo_count must be between 1 and 250\n"
 # define ARG_ERROR \
-"Invalid argument: %s.\n"
+"Invalid argument: %s\n"
 
 # define SEM_FORKS "/forks_sem"
 # define SEM_PRINT "/print_sem"

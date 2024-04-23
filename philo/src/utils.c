@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 01:52:24 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/02 00:40:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/24 00:10:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_atoi(const char *s)
 	return (result * sign);
 }
 
-void	print_state(t_philo *philo, t_state state)
+void	print_state(t_philo *philo, char *state)
 {
 	uint32_t	time;
 
@@ -48,17 +48,7 @@ void	print_state(t_philo *philo, t_state state)
 		pthread_mutex_unlock(&philo->data->print_mut);
 		return ;
 	}
-	printf("%-10u %d ", time, philo->idx + 1);
-	if (state == HAS_FORK)
-		printf("has taken a fork\n");
-	else if (state == EATING)
-		printf("is eating\n");
-	else if (state == SLEEPING)
-		printf("is sleeping\n");
-	else if (state == THINKING)
-		printf("is thinking\n");
-	else if (state == DEAD)
-		printf("died\n");
+	printf("%-10u %d %s\n", time, philo->idx + 1, state);
 	pthread_mutex_unlock(&philo->data->print_mut);
 }
 
