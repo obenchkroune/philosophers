@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:35:21 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 03:54:14 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:17:08 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	cleanup_philo(t_philo *philo)
 	data = philo->data;
 	cleanup_semaphore(data->forks ,SEM_FORKS);
 	cleanup_semaphore(data->print_sem ,SEM_PRINT);
-	cleanup_semaphore(data->stop_sem, SEM_STOP);
 	cleanup_semaphore(data->sync_sem ,SEM_SYNC);
 	cleanup_semaphore(data->meal_sem ,SEM_MEAL);
 	free(data);

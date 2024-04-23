@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 09:47:07 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/22 19:24:29 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:17:07 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 # define SEM_FORKS "/forks_sem"
 # define SEM_PRINT "/print_sem"
-# define SEM_STOP "/stop_sem"
 # define SEM_SYNC "/sync_sem"
 # define SEM_MEAL "/meal_sem"
 
@@ -51,7 +50,6 @@ typedef struct s_data
 	int			max_meals;
 	sem_t		*forks;
 	sem_t		*print_sem;
-	sem_t		*stop_sem;
 	sem_t		*sync_sem;
 	sem_t		*meal_sem;
 }	t_data;
