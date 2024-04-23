@@ -6,13 +6,21 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 09:47:07 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 23:17:07 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:51:09 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_BONUS_H
-
 # define PHILO_BONUS_H
+
+# define ARG_COUNT_ERROR \
+"Invalid number of arguments\n"
+# define MS_ERROR \
+"The time_to_die / time_to_sleep / time_to_eat must be > 60ms.\n"
+# define PHILO_COUNT_ERROR \
+"The philo_count must be between 1 and 250.\n"
+# define ARG_ERROR \
+"Invalid argument: %s.\n"
 
 # define SEM_FORKS "/forks_sem"
 # define SEM_PRINT "/print_sem"
@@ -31,14 +39,11 @@
 # include <sys/time.h>
 # include <fcntl.h>
 
-typedef enum e_state
-{
-	HAS_FORK,
-	EATING,
-	SLEEPING,
-	THINKING,
-	DEAD
-}	t_state;
+# define HAS_FORK "has taken a fork"
+# define EATING "is eating"
+# define SLEEPING "is sleeping"
+# define THINKING "is thinking"
+# define DEAD "died"
 
 typedef struct s_data
 {
@@ -61,13 +66,12 @@ typedef struct s_philo
 	int			idx;
 	int			total_meals;
 	uint32_t	next_meal;
-	sem_t		*sem;
 }	t_philo;
 
 void		cleanup_philo(t_philo *philo);
 bool		has_errors(int ac, char **av);
 int			ft_atoi(const char *s);
-void		print_state(t_philo *philo, t_state state);
+void		print_state(t_philo *philo, char *state);
 uint32_t	ft_timestamp(void);
 size_t		ft_strlen(const char *str);
 int			ft_strcmp(const char *str1, const char *str2);

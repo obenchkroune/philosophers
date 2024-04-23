@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:55:41 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/02/28 07:14:17 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:35:56 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 static bool	is_valid_unsigned(const char *str)
 {
-	if (ft_strlen(str) > 10 || (ft_strlen(str) == 10 && \
-		ft_strcmp(str, "4294967295") > 0))
-		return (false);
-	return (true);
+	return (ft_strlen(str) <= 10 \
+		&& !(ft_strlen(str) == 10 && ft_strcmp(str, "4294967295") > 0));
 }
 
 static bool	is_valid_number(const char *nbr)
@@ -35,20 +33,18 @@ bool	has_errors(int ac, char **av)
 {
 	size_t	i;
 
-	i = 1;
 	if (ac != 5 && ac != 6)
-	{
-		printf("Invalid number of arguments\n");
-		return (true);
-	}
+		return (printf(ARG_COUNT_ERROR), true);
+	i = 1;
 	while (av[i])
 	{
 		if (!is_valid_number(av[i]) || !is_valid_unsigned(av[i]))
-		{
-			printf("Invalid argument: %s\n", av[i]);
-			return (true);
-		}
+			return (printf(ARG_ERROR, av[i]), true);
 		i++;
 	}
+	if (ft_atoi(av[2]) < 60 || ft_atoi(av[3]) < 60 || ft_atoi(av[4]) < 60)
+		return (printf(MS_ERROR), true);
+	if (ft_atoi(av[1]) < 1 || ft_atoi(av[1]) > 250)
+		return (printf(PHILO_COUNT_ERROR), true);
 	return (false);
 }

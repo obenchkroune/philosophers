@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 15:33:14 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 21:34:29 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:58:02 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,15 @@ int	ft_atoi(const char *s)
 	return (result * sign);
 }
 
-void	print_state(t_philo *philo, t_state state)
+void	print_state(t_philo *philo, char *state)
 {
 	uint32_t	time;
 
 	time = ft_timestamp() - philo->data->start;
+	if (philo->total_meals == philo->data->max_meals)
+		exit(0);
 	sem_wait(philo->data->print_sem);
-	printf("%-10u %d ", time, philo->idx + 1);
-	if (state == HAS_FORK)
-		printf("has taken a fork\n");
-	else if (state == EATING)
-		printf("is eating\n");
-	else if (state == SLEEPING)
-		printf("is sleeping\n");
-	else if (state == THINKING)
-		printf("is thinking\n");
-	else if (state == DEAD)
-	{
-		printf("died\n");
-		return ;
-	}
+	printf("%-20u %d %s\n", time, philo->idx + 1, state);
 	sem_post(philo->data->print_sem);
 }
 

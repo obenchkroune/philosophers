@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosopher.c                                      :+:      :+:    :+:   */
+/*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:50:22 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 21:05:57 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:41:18 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	*philo_routine(t_philo *philo)
 	pthread_t	tid;
 
 	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
-	pthread_create(&tid, NULL, &check_death_routine, philo);
+	if (philo->data->count > 1)
+		pthread_create(&tid, NULL, &check_death_routine, philo);
 	while (!philo_died(philo) && !reached_required_meals(philo))
 	{
 		ft_take_forks(philo);
@@ -53,7 +54,7 @@ void	*philo_routine(t_philo *philo)
 	return (NULL);
 }
 
-void	start_philo(t_philo *philo)
+void	start_simulation(t_philo *philo)
 {
 	uint32_t	i;
 	t_data		*data;

@@ -6,7 +6,7 @@
 #    By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 09:45:12 by obenchkr          #+#    #+#              #
-#    Updated: 2024/04/23 03:44:55 by obenchkr         ###   ########.fr        #
+#    Updated: 2024/04/23 23:40:49 by obenchkr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CFLAGS		=	-Wall -Werror -Wextra -Iinc
 CLIBS		=	-lpthread
 
 NAME		=	philo
-SRC_FILES	=	actions.c checkers.c cleanup.c errors.c init.c main.c philosopher.c utils.c
+SRC_FILES	=	actions.c checkers.c cleanup.c errors.c init.c main.c \
+				simulation.c utils.c
 SRC			=	$(addprefix src/, $(SRC_FILES))
 OBJ			=	$(SRC:.c=.o)
 

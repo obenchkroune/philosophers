@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 02:12:15 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 21:02:35 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:39:58 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	ft_take_forks(t_philo *philo)
 	{
 		print_state(philo, HAS_FORK);
 		usleep(philo->data->time_to_die * 1000);
+		print_state(philo, DEAD);
+		philo->data->philo_died = true;
 		return ;
 	}
 	if (philo->idx % 2 == 0)

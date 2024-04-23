@@ -6,13 +6,21 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 01:46:31 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 21:01:43 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:40:32 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-
 # define PHILO_H
+
+# define ARG_COUNT_ERROR \
+"Invalid number of arguments\n"
+# define MS_ERROR \
+"The time_to_die / time_to_sleep / time_to_eat must be > 60ms.\n"
+# define PHILO_COUNT_ERROR \
+"The philo_count must be between 1 and 250.\n"
+# define ARG_ERROR \
+"Invalid argument: %s.\n"
 
 # include <sys/time.h>
 # include <unistd.h>
@@ -74,7 +82,7 @@ void		ft_eat(t_philo *philo);
 void		ft_sleep(t_philo *philo);
 
 bool		has_errors(int ac, char **av);
-void		start_philo(t_philo *philo);
+void		start_simulation(t_philo *philo);
 void		cleanup_philo(t_philo *philo);
 
 bool		reached_required_meals(t_philo *philo);

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:31:16 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 23:17:09 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:51:51 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ t_philo	*init_philo(int ac, char **av)
 		philo[i].total_meals = 0;
 		philo[i].idx = i;
 		philo[i].next_meal = ft_timestamp() + data->time_to_die;
-		sem_unlink("/meal");
-		philo[i].sem = sem_open("/meal", O_CREAT | O_EXCL, 0666, 1);
 		i++;
 	}
 	return (philo);

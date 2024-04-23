@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers_bonus.c                               :+:      :+:    :+:   */
+/*   simulation_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:05:53 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 23:15:48 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/23 23:51:23 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,17 @@ void	*check_death_routine(t_philo *philo)
 {
 	while (1)
 	{
-		sem_wait(philo->sem);
+		sem_wait(philo->data->sync_sem);
 		if (ft_timestamp() >= philo->next_meal)
 		{
-			sem_post(philo->sem);
+			sem_post(philo->data->sync_sem);
 			break ;
 		}
-		sem_post(philo->sem);
+		sem_post(philo->data->sync_sem);
 		usleep(1000);
 	}
 	print_state(philo, DEAD);
+	sem_wait(philo->data->print_sem);
 	exit(0);
 }
 
