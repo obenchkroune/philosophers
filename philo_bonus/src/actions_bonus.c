@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:52:52 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/24 00:00:28 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:52:31 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	ft_eat(t_philo *philo)
 	sem_post(sync_sem);
 	philo->total_meals++;
 	usleep(data->time_to_eat * 1000);
+	if (philo->total_meals == philo->data->max_meals)
+		exit(0);
 }
 
 void	ft_sleep(t_philo *philo)
