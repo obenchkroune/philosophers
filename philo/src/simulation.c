@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 06:50:22 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/26 21:44:56 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/01 00:23:23 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	*philo_routine(t_philo *philo)
 {
 	pthread_t	tid;
 
+	pthread_mutex_lock(&philo->data->start_mut);
+	pthread_mutex_unlock(&philo->data->start_mut);
 	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
 	if (philo->data->count > 1)
 		pthread_create(&tid, NULL, &check_death_routine, philo);
@@ -61,11 +63,13 @@ void	start_simulation(t_philo *philo)
 
 	data = philo->data;
 	i = 0;
-	data->start = ft_timestamp();
+	pthread_mutex_lock(&data->start_mut);
 	while (i < data->count)
 	{
 		philo[i].next_meal = ft_timestamp() + data->time_to_die;
 		pthread_create(&philo[i].tid, NULL, (void *)philo_routine, &philo[i]);
 		i += 1;
 	}
+	data->start = ft_timestamp();
+	pthread_mutex_unlock(&data->start_mut);
 }

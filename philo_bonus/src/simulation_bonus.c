@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 17:05:53 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/24 00:07:18 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/01 00:34:46 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	*check_death_routine(t_philo *philo)
 		usleep(1000);
 	}
 	print_state(philo, DEAD);
-	exit(0);
+	sem_wait(philo->data->print_sem);
+	exit(1);
 }
 
 void	philo_routine(t_philo *philo)

@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 01:46:31 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/24 00:12:50 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/01 00:22:11 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_data
 	pthread_mutex_t	print_mut;
 	pthread_mutex_t	meals_mut;
 	pthread_mutex_t	death_mut;
+	pthread_mutex_t	start_mut;
 	pthread_mutex_t	*forks;
 }	t_data;
 

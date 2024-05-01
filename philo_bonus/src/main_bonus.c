@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 09:46:37 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 23:16:56 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/01 00:44:59 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,18 @@ void	kill_all_philo(t_philo *philo)
 
 int	main(int ac, char **av)
 {
-	t_philo		*philo;
-	// pthread_t	tid;
+	t_philo	*philo;
+	int		status;
 
 	if (has_errors(ac, av))
 		return (1);
 	philo = init_philo(ac, av);
 	start_philo(philo);
-	waitpid(-1, NULL, 0);
+	while (waitpid(-1, &status, 0) != -1 && WEXITSTATUS(status) != 1)
+	{
+	}
 	kill_all_philo(philo);
+
 	cleanup_philo(philo);
 	return (0);
 }

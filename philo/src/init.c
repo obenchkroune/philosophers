@@ -6,7 +6,7 @@
 /*   By: obenchkr <obenchkr@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 02:00:09 by obenchkr          #+#    #+#             */
-/*   Updated: 2024/04/23 21:01:38 by obenchkr         ###   ########.fr       */
+/*   Updated: 2024/05/01 00:22:21 by obenchkr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static t_data	*init_data(int ac, char **av)
 	pthread_mutex_init(&data->print_mut, NULL);
 	pthread_mutex_init(&data->meals_mut, NULL);
 	pthread_mutex_init(&data->death_mut, NULL);
+	pthread_mutex_init(&data->start_mut, NULL);
 	return (data);
 }
 
