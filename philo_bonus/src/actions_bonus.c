@@ -49,17 +49,12 @@ void	ft_put_forks(t_philo *philo)
 
 void	ft_eat(t_philo *philo)
 {
-	sem_t	*sync_sem;
-	t_data	*data;
-
 	print_state(philo, EATING);
-	data = philo->data;
-	sync_sem = data->sync_sem;
-	sem_wait(sync_sem);
-	philo->next_meal = ft_timestamp() + data->time_to_die;
-	sem_post(sync_sem);
 	philo->total_meals++;
-	ft_usleep(data->time_to_eat);
+	sem_wait(philo->data->sync_sem);
+	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
+	sem_post(philo->data->sync_sem);
+	ft_usleep(philo->data->time_to_eat);
 }
 
 void	ft_sleep(t_philo *philo)

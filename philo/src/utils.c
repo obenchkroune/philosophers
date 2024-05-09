@@ -43,12 +43,10 @@ void	print_state(t_philo *philo, char *state)
 
 	time = ft_timestamp() - philo->data->start;
 	pthread_mutex_lock(&philo->data->print_mut);
-	if (philo_died(philo) || reached_required_meals(philo))
+	if (!philo_died(philo) && !reached_required_meals(philo))
 	{
-		pthread_mutex_unlock(&philo->data->print_mut);
-		return ;
+		printf("%-10u %d %s\n", time, philo->idx + 1, state);
 	}
-	printf("%-10u %d %s\n", time, philo->idx + 1, state);
 	pthread_mutex_unlock(&philo->data->print_mut);
 }
 

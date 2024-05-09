@@ -63,6 +63,8 @@ void	start_simulation(t_philo *philo)
 
 	data = philo->data;
 	i = 0;
+	if (data->max_meals == 0)
+		return ;
 	pthread_mutex_lock(&data->start_mut);
 	while (i < data->count)
 	{

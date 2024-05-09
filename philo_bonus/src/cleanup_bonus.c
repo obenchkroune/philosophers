@@ -23,10 +23,10 @@ void	cleanup_philo(t_philo *philo)
 	t_data		*data;
 
 	data = philo->data;
-	cleanup_semaphore(data->forks ,SEM_FORKS);
-	cleanup_semaphore(data->print_sem ,SEM_PRINT);
-	cleanup_semaphore(data->sync_sem ,SEM_SYNC);
-	cleanup_semaphore(data->meal_sem ,SEM_MEAL);
+	cleanup_semaphore(data->forks, SEM_FORKS);
+	cleanup_semaphore(data->print_sem, SEM_PRINT);
+	cleanup_semaphore(data->sync_sem, SEM_SYNC);
+	cleanup_semaphore(data->meal_sem, SEM_MEAL);
 	free(data);
 	free(philo);
 }

@@ -29,12 +29,13 @@ int	main(int ac, char **av)
 	if (has_errors(ac, av))
 		return (1);
 	philo = init_philo(ac, av);
+	if (philo->data->max_meals == 0)
+		return (cleanup_philo(philo), 0);
 	start_philo(philo);
 	while (waitpid(-1, &status, 0) != -1 && WEXITSTATUS(status) != 1)
 	{
 	}
 	kill_all_philo(philo);
-
 	cleanup_philo(philo);
 	return (0);
 }

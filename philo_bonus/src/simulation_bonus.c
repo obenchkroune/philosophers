@@ -12,17 +12,18 @@
 
 #include "philo_bonus.h"
 
+bool	ft_isdead(t_philo *philo)
+{
+	sem_wait(philo->data->sync_sem);
+	if (ft_timestamp() >= philo->next_meal)
+		return (sem_post(philo->data->sync_sem), true);
+	return (sem_post(philo->data->sync_sem), false);
+}
+
 void	*check_death_routine(t_philo *philo)
 {
-	while (1)
+	while (!ft_isdead(philo))
 	{
-		sem_wait(philo->data->sync_sem);
-		if (ft_timestamp() >= philo->next_meal)
-		{
-			sem_post(philo->data->sync_sem);
-			break ;
-		}
-		sem_post(philo->data->sync_sem);
 		usleep(1000);
 	}
 	print_state(philo, DEAD);
