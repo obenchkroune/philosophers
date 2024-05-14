@@ -51,7 +51,7 @@ typedef struct s_data
 	pthread_mutex_t	meals_mut;
 	pthread_mutex_t	death_mut;
 	pthread_mutex_t	start_mut;
-	pthread_mutex_t	*forks;
+	pthread_mutex_t	forks[250];
 }	t_data;
 
 typedef struct s_philo
@@ -66,9 +66,11 @@ typedef struct s_philo
 	uint32_t		next_meal;
 }	t_philo;
 
+bool	should_continue(t_philo *philo);
+void		init_data(t_data *data, int ac, char **av);
+void		init_philo(t_data *data, t_philo philo[250]);
 size_t		ft_strlen(const char *str);
 int			ft_atoi(const char *s);
-t_philo		*init_philo(int ac, char **av);
 uint32_t	ft_timestamp(void);
 void		print_state(t_philo *philo, char *state);
 int			ft_strcmp(const char *str1, const char *str2);

@@ -11,13 +11,15 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
+#include <time.h>
 
 void	*check_death_routine(void *ptr)
 {
 	t_philo		*philo;
 
 	philo = (t_philo *)ptr;
-	while (!reached_required_meals(philo) && !philo_died(philo))
+	while (should_continue(philo))
 	{
 		pthread_mutex_lock(&philo->mutex);
 		if (ft_timestamp() > philo->next_meal)
@@ -30,7 +32,6 @@ void	*check_death_routine(void *ptr)
 			return (NULL);
 		}
 		pthread_mutex_unlock(&philo->mutex);
-		usleep(1000);
 	}
 	return (NULL);
 }
@@ -42,9 +43,8 @@ void	*philo_routine(t_philo *philo)
 	pthread_mutex_lock(&philo->data->start_mut);
 	pthread_mutex_unlock(&philo->data->start_mut);
 	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
-	if (philo->data->count > 1)
-		pthread_create(&tid, NULL, &check_death_routine, philo);
-	while (!philo_died(philo) && !reached_required_meals(philo))
+	pthread_create(&tid, NULL, &check_death_routine, philo);
+	while (should_continue(philo))
 	{
 		ft_take_forks(philo);
 		ft_eat(philo);

@@ -18,10 +18,6 @@ void	cleanup_philo(t_philo *philo)
 	uint32_t	i;
 
 	data = philo->data;
-	pthread_mutex_destroy(&data->print_mut);
-	pthread_mutex_destroy(&data->meals_mut);
-	pthread_mutex_destroy(&data->death_mut);
-	pthread_mutex_destroy(&data->start_mut);
 	i = 0;
 	while (i < data->count)
 	{
@@ -29,7 +25,8 @@ void	cleanup_philo(t_philo *philo)
 		pthread_mutex_destroy(&philo[i].mutex);
 		i++;
 	}
-	free(data->forks);
-	free(philo);
-	free(data);
+	pthread_mutex_destroy(&data->print_mut);
+	pthread_mutex_destroy(&data->meals_mut);
+	pthread_mutex_destroy(&data->death_mut);
+	pthread_mutex_destroy(&data->start_mut);
 }

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdbool.h>
 
 bool	reached_required_meals(t_philo *philo)
 {
@@ -26,4 +27,9 @@ bool	philo_died(t_philo *philo)
 	if (philo->data->philo_died)
 		return (pthread_mutex_unlock(&philo->data->death_mut), true);
 	return (pthread_mutex_unlock(&philo->data->death_mut), false);
+}
+
+bool	should_continue(t_philo *philo)
+{
+	return (!philo_died(philo) && !reached_required_meals(philo));
 }

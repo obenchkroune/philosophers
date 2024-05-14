@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
+#include <unistd.h>
 
 void	smart_usleep(t_philo *philo, uint32_t ms)
 {
@@ -29,13 +31,11 @@ void	ft_take_forks(t_philo *philo)
 {
 	if (philo->data->count == 1)
 	{
+		pthread_mutex_lock(philo->right_fork);
 		print_state(philo, HAS_FORK);
 		usleep(philo->data->time_to_die * 1000);
-		print_state(philo, DEAD);
-		philo->data->philo_died = true;
-		return ;
 	}
-	if (philo->idx % 2 == 0)
+	else if (philo->idx % 2 == 0)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_state(philo, HAS_FORK);
@@ -54,7 +54,11 @@ void	ft_take_forks(t_philo *philo)
 
 void	ft_put_forks(t_philo *philo)
 {
-	if (philo->idx % 2 == 0)
+	if (philo->data->count == 1)
+	{
+		pthread_mutex_unlock(philo->right_fork);
+	}
+	else if (philo->idx % 2 == 0)
 	{
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
@@ -71,6 +75,7 @@ void	ft_eat(t_philo *philo)
 	pthread_mutex_lock(&philo->mutex);
 	print_state(philo, EATING);
 	philo->next_meal = ft_timestamp() + philo->data->time_to_die;
+	pthread_mutex_unlock(&philo->mutex);
 	philo->total_meals += 1;
 	if (philo->total_meals == philo->data->max_meals)
 	{
@@ -78,7 +83,7 @@ void	ft_eat(t_philo *philo)
 		philo->data->max_meals_reached += 1;
 		pthread_mutex_unlock(&philo->data->meals_mut);
 	}
-	pthread_mutex_unlock(&philo->mutex);
+	
 	smart_usleep(philo, philo->data->time_to_eat);
 }
 

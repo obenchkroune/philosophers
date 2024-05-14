@@ -11,15 +11,18 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
 
 int	main(int ac, char **av)
 {
-	t_philo		*philo;
+	t_data		data;
+	t_philo		philo[250];
 	u_int32_t	i;
 
 	if (has_errors(ac, av))
 		return (1);
-	philo = init_philo(ac, av);
+	init_data(&data, ac, av);
+	init_philo(&data, philo);
 	start_simulation(philo);
 	i = 0;
 	while (i < philo->data->count)
