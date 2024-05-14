@@ -68,6 +68,7 @@ typedef struct s_philo
 	uint32_t	next_meal;
 }	t_philo;
 
+void		init_data(t_data *data, int ac, char **av);
 void		cleanup_philo(t_philo *philo);
 bool		has_errors(int ac, char **av);
 int			ft_atoi(const char *s);
@@ -75,7 +76,7 @@ void		print_state(t_philo *philo, char *state);
 uint32_t	ft_timestamp(void);
 size_t		ft_strlen(const char *str);
 int			ft_strcmp(const char *str1, const char *str2);
-t_philo		*init_philo(int ac, char **av);
+void		init_philo(t_philo *philo, t_data *data);
 void		ft_take_forks(t_philo *philo);
 void		ft_put_forks(t_philo *philo);
 void		ft_eat(t_philo *philo);

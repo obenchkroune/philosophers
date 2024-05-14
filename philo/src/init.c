@@ -24,7 +24,7 @@ static void	init_forks(pthread_mutex_t forks[250], uint32_t count)
 	}
 }
 
-void init_data(t_data *data, int ac, char **av)
+void	init_data(t_data *data, int ac, char **av)
 {
 	memset(data, 0, sizeof(t_data));
 	data->philo_died = false;

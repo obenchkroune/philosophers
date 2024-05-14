@@ -66,7 +66,7 @@ typedef struct s_philo
 	uint32_t		next_meal;
 }	t_philo;
 
-bool	should_continue(t_philo *philo);
+bool		should_continue(t_philo *philo);
 void		init_data(t_data *data, int ac, char **av);
 void		init_philo(t_data *data, t_philo philo[250]);
 size_t		ft_strlen(const char *str);

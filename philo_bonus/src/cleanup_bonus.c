@@ -27,6 +27,4 @@ void	cleanup_philo(t_philo *philo)
 	cleanup_semaphore(data->print_sem, SEM_PRINT);
 	cleanup_semaphore(data->sync_sem, SEM_SYNC);
 	cleanup_semaphore(data->meal_sem, SEM_MEAL);
-	free(data);
-	free(philo);
 }

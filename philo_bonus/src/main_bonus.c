@@ -23,12 +23,14 @@ void	kill_all_philo(t_philo *philo)
 
 int	main(int ac, char **av)
 {
-	t_philo	*philo;
+	t_philo	philo[250];
+	t_data	data;
 	int		status;
 
 	if (has_errors(ac, av))
 		return (1);
-	philo = init_philo(ac, av);
+	init_data(&data, ac, av);
+	init_philo(philo, &data);
 	if (philo->data->max_meals == 0)
 		return (cleanup_philo(philo), 0);
 	start_philo(philo);

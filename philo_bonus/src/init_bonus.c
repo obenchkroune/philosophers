@@ -26,13 +26,8 @@ static sem_t	*safe_sem_init(const char *name, int value)
 	return (sem);
 }
 
-static t_data	*init_data(int ac, char **av)
+void	init_data(t_data *data, int ac, char **av)
 {
-	t_data	*data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		exit(1);
 	data->philo_count = ft_atoi(av[1]);
 	data->time_to_die = ft_atoi(av[2]);
 	data->time_to_eat = ft_atoi(av[3]);
@@ -44,22 +39,12 @@ static t_data	*init_data(int ac, char **av)
 	data->max_meals = -1;
 	if (ac == 6)
 		data->max_meals = ft_atoi(av[5]);
-	return (data);
 }
 
-t_philo	*init_philo(int ac, char **av)
+void	init_philo(t_philo *philo, t_data *data)
 {
-	t_philo		*philo;
-	t_data		*data;
 	uint32_t	i;
 
-	data = init_data(ac, av);
-	philo = malloc(sizeof(t_philo) * data->philo_count);
-	if (!philo)
-	{
-		free(data);
-		exit(1);
-	}
 	i = 0;
 	while (i < data->philo_count)
 	{
@@ -69,5 +54,4 @@ t_philo	*init_philo(int ac, char **av)
 		philo[i].next_meal = ft_timestamp() + data->time_to_die;
 		i++;
 	}
-	return (philo);
 }

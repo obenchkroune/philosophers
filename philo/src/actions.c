@@ -83,7 +83,6 @@ void	ft_eat(t_philo *philo)
 		philo->data->max_meals_reached += 1;
 		pthread_mutex_unlock(&philo->data->meals_mut);
 	}
-	
 	smart_usleep(philo, philo->data->time_to_eat);
 }
 
