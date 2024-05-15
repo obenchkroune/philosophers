@@ -34,6 +34,10 @@ void	ft_take_forks(t_philo *philo)
 		pthread_mutex_lock(philo->right_fork);
 		print_state(philo, HAS_FORK);
 		usleep(philo->data->time_to_die * 1000);
+		print_state(philo, DEAD);
+		pthread_mutex_lock(&philo->data->death_mut);
+		philo->data->philo_died = true;
+		pthread_mutex_unlock(&philo->data->death_mut);
 	}
 	else if (philo->idx % 2 == 0)
 	{
