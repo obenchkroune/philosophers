@@ -17,7 +17,7 @@ int	main(int ac, char **av)
 {
 	t_data		data;
 	t_philo		philo[250];
-	u_int32_t	i;
+	uint32_t	i;
 
 	if (has_errors(ac, av))
 		return (1);
